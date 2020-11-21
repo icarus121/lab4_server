@@ -12,7 +12,7 @@
 #define PORT 8080
 
 // Function designed for chat between client and server.
-void func(int sockfd)
+void func(int socket_desc)
 {
     char buff[MAX];
     int n;
@@ -22,7 +22,7 @@ void func(int sockfd)
         bzero(buff, MAX);
 
         // read the message from client and copy it in buffer
-        read(sockfd, buff, sizeof(buff));
+        read(socket_desc, buff, sizeof(buff));
 
         // print buffer which contains the client contents
         printf("From client: %s\t To client : ", buff);
@@ -33,7 +33,7 @@ void func(int sockfd)
         while ((buff[n++] = getchar()) != '\n');
 
         // and send that buffer to client
-        write(sockfd, buff, sizeof(buff));
+        write(socket_desc, buff, sizeof(buff));
 
         // if msg contains "Exit" then server exit and chat ended
         if (strncmp("exit", buff, 4) == 0) {
